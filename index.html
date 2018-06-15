@@ -1,0 +1,41 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="dataGetter.js"></script>
+<style>
+.affix {
+      top: 20px;
+      z-index: 9999 !important;
+  }
+table {
+  border-collapse: collapse;
+}
+th ,tr{
+    text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid" style="background-color:#2196F3;color:#fff;height:200px;">
+  <div class="container">
+		<h1>Comparision of Crypto Currency Prices between exchanges</h1>
+  </div>
+</div>
+<br>
+<div class="container">
+	<div class="well">
+		<input class="form-control" id="search-currency" type="text" placeholder="Search..">
+	</div>
+	<div align="right">
+		<button type="button" class='btn btn-primary'>Refresh</button>
+	</div>
+	<br>
+	<div id="div1" class="well"></div>
+	</div>
+</body>
+</html>
