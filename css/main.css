@@ -97,8 +97,6 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-
-<style>
 .affix {
       top: 20px;
       z-index: 9999 !important;
@@ -109,8 +107,14 @@ table {
 th ,tr{
     text-align: center;
 }
-</style>
 
+.redText {
+	text-color:red;
+}
+
+.greenText{
+	text-color:green;
+}
 
 /* ==========================================================================
    Helper classes

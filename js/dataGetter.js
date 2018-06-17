@@ -10,7 +10,7 @@ $(document).ready(function(){
 	var urls=[{"exchange":"coindelta","class":"danger","apiUrl":"https://api.coindelta.com/api/v1/public/getticker/"},
 	{"exchange":"koinex","class":"info","apiUrl":"https://koinex.in/api/ticker"}];
 	var price={};
-		
+	var oldPrice = {};
     $("button").click(function(){
        parsecoindelt();
 	});
@@ -62,10 +62,38 @@ $(document).ready(function(){
         }});
 	};
 	
-	var createTDElement=function(className, value){
-		var td="<TD class='"+className+"'>"+value+"</TD>";	
+	var createTDElement=function(className, value,oldValue){
+		if(oldValue!=null){
+			debugger;
+			if(value > oldValue){
+				debugger;
+				className=className+" greenText";
+			}else if(value < oldValue){
+				debugger;
+				className=className+" redText";
+			}
+		}
+		
+		if(className!=null){
+			var td="<TD class='"+className+"'>"+value+"</TD>";	
+		}else{
+			var td="<TD>"+value+"</TD>";	
+		}
 		return td;
 	};
+	
+	var isBuygtSell=function(buy,sell){
+		
+		if(buy!=null && sell != null){
+		  for(var i=0;i< buy.length;i++){
+			for(var j=0;j<sell.length;j++){
+				if (i!=j && buy[i]!=0 && sell[j]!=0 && buy[i] <= sell[j]){
+					return true;
+				}	
+			}	
+		  }	
+		}
+	}	
 	var getHTML=function(){
 		var html= "<TABLE class='table table-bordered'>";
 			html=html+"<THEAD><TR>"
@@ -73,19 +101,27 @@ $(document).ready(function(){
 			html=html+"</TR></THEAD><TBODY id='currencyTable'>"
 			Object.keys(price).forEach (function(key){
 				var value = price[key];
-				html=html+"<TR><TD>"+key+"("+value.name+")</TD>"
+				var oldValue= oldPrice[key];
+				html=html+"<TR>";
+				var highlightClass=null;
+				if(isBuygtSell(value.buy,value.sell)==true){
+					highlightClass= "success";
+				}				
+				html=html+createTDElement(highlightClass,key+"("+value.name+")");
 				for(var i=0;i<urls.length;i++){ // buy prices
+					var val= (oldValue!=null)?oldValue.buy[i]:null;
 					if(value.buy[i]!=null)
-						html=html+createTDElement(urls[i].class,value.buy[i]);
+						html=html+createTDElement(urls[i].class,value.buy[i],val);
 					else{
-						html=html+createTDElement(urls[i].class,0);
+						html=html+createTDElement(urls[i].class,0,null);
 					}
 				}
 				for(var i=0;i<urls.length;i++){  // sell prices
+				var val= (oldValue!=null)?oldValue.sell[i]:null;
 					if(value.sell[i]!=null)
-						html=html+createTDElement(urls[i].class,value.sell[i]);
+						html=html+createTDElement(urls[i].class,value.sell[i],val);
 					else{
-						html=html+createTDElement(urls[i].class,0);
+						html=html+createTDElement(urls[i].class,0,null);
 					}
 				}
 				for(var i=0;i<urls.length;i++){  // sell prices
@@ -100,10 +136,10 @@ $(document).ready(function(){
 			
 		html=html+ "</TBODY></TABLE>"
 		$("#div1").html(html);
-		
+		oldPrice = price;
 		setTimeout(function(){
 			parsecoindelt();
-		}, 5000);
+		}, 10000);
 	};
 	parsecoindelt();	
 });

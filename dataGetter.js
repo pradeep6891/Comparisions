@@ -63,9 +63,24 @@ $(document).ready(function(){
 	};
 	
 	var createTDElement=function(className, value){
-		var td="<TD class='"+className+"'>"+value+"</TD>";	
+		if(className!=null)
+			var td="<TD class='"+className+"'>"+value+"</TD>";	
+		else
+			var td="<TD>"+value+"</TD>";	
 		return td;
 	};
+	
+	var isBuygtSell=function(buy,sell){
+		debugger;
+		for(var i=0;i< buy.length;i++){
+			for(var j=0;j<sell.length;j++){
+				if (i!=j && buy[i] <= sell[j]){
+					return true;
+				}	
+			}	
+		}	
+		
+	}	
 	var getHTML=function(){
 		var html= "<TABLE class='table table-bordered'>";
 			html=html+"<THEAD><TR>"
@@ -73,7 +88,12 @@ $(document).ready(function(){
 			html=html+"</TR></THEAD><TBODY id='currencyTable'>"
 			Object.keys(price).forEach (function(key){
 				var value = price[key];
-				html=html+"<TR><TD>"+key+"("+value.name+")</TD>"
+				html=html+"<TR>";
+				var highlightClass=null;
+				if(isBuygtSell(value.buy,value.price)==true){
+					highlightClass= "danger";
+				}				
+				html=html+createTDElement(highlightClass,key+"("+value.name+")");
 				for(var i=0;i<urls.length;i++){ // buy prices
 					if(value.buy[i]!=null)
 						html=html+createTDElement(urls[i].class,value.buy[i]);
@@ -103,7 +123,7 @@ $(document).ready(function(){
 		
 		setTimeout(function(){
 			parsecoindelt();
-		}, 5000);
+		}, 20000);
 	};
 	parsecoindelt();	
 });
