@@ -66,11 +66,9 @@ $(document).ready(function(){
 		if(oldValue!=null){
 			if(value > oldValue){
 				debugger;
-				//className=className+" greenText";
 				className="success";
 			}else if(value < oldValue){
 				debugger;
-				//className=className+" redText";
 				className = "danger";
 			}
 		}
