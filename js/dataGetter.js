@@ -7,7 +7,7 @@ $(document).ready(function(){
     });
   });
 	
-	var urls=[{"exchange":"coindelta","class":"danger","apiUrl":"https://api.coindelta.com/api/v1/public/getticker/"},
+	var urls=[{"exchange":"coindelta","class":"warning","apiUrl":"https://api.coindelta.com/api/v1/public/getticker/"},
 	{"exchange":"koinex","class":"info","apiUrl":"https://koinex.in/api/ticker"}];
 	var price={};
 	var oldPrice = {};
@@ -64,13 +64,14 @@ $(document).ready(function(){
 	
 	var createTDElement=function(className, value,oldValue){
 		if(oldValue!=null){
-			debugger;
 			if(value > oldValue){
 				debugger;
-				className=className+" greenText";
+				//className=className+" greenText";
+				className="success";
 			}else if(value < oldValue){
 				debugger;
-				className=className+" redText";
+				//className=className+" redText";
+				className = "danger";
 			}
 		}
 		
@@ -136,10 +137,10 @@ $(document).ready(function(){
 			
 		html=html+ "</TBODY></TABLE>"
 		$("#div1").html(html);
-		oldPrice = price;
+		oldPrice = JSON.parse(JSON.stringify(price));
 		setTimeout(function(){
 			parsecoindelt();
-		}, 10000);
+		}, 30000);
 	};
 	parsecoindelt();	
 });

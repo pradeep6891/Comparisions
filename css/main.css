@@ -109,11 +109,13 @@ th ,tr{
 }
 
 .redText {
-	text-color:red;
+	bgcolor: coral;
+	font-weight:bold;
 }
 
 .greenText{
-	text-color:green;
+	bgcolor: green;
+	font-weight:bold;
 }
 
 /* ==========================================================================
